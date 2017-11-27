@@ -6,6 +6,8 @@ services:
 
     applications:
       image: tianon/true
+      volumes:
+        - ${APPLICATION}:/var/www
 
 ### Workspace Utilities Container ###########################
 
@@ -17,7 +19,6 @@ services:
           - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
           - INSTALL_SOAP=${WORKSPACE_INSTALL_SOAP}
           - INSTALL_LDAP=${WORKSPACE_INSTALL_LDAP}
-          - INSTALL_IMAP=${WORKSPACE_INSTALL_IMAP}
           - INSTALL_MONGO=${WORKSPACE_INSTALL_MONGO}
           - INSTALL_PHPREDIS=${WORKSPACE_INSTALL_PHPREDIS}
           - INSTALL_MSSQL=${WORKSPACE_INSTALL_MSSQL}
@@ -138,6 +139,8 @@ services:
       ports:
         - "${NGINX_HOST_HTTP_PORT}:80"
         - "${NGINX_HOST_HTTPS_PORT}:443"
+      expose:
+          "80"
       depends_on:
         - php-fpm
       networks:
@@ -215,10 +218,10 @@ services:
         args:
           - MYSQL_VERSION=${MYSQL_VERSION}
       environment:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_DATABASE=gui
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+        - MYSQL_ROOT_PASSWORD=root
         - TZ=${WORKSPACE_TIMEZONE}
       volumes:
         - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
@@ -483,7 +486,7 @@ services:
       ports:
         - "5050:5050"
       volumes:
-        - ${DATA_SAVE_PATH}/pgadmin-backup:/var/lib/pgadmin/storage/pgadmin4
+        - ${DATA_SAVE_PATH}/pgadmin-backup:/var/lib/pgadmin4/data/storage/pgadmin4
       depends_on:
         - postgres
       networks:
