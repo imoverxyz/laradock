@@ -215,10 +215,10 @@ services:
         args:
           - MYSQL_VERSION=${MYSQL_VERSION}
       environment:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_DATABASE=gui
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+        - MYSQL_ROOT_PASSWORD=root
         - TZ=${WORKSPACE_TIMEZONE}
       volumes:
         - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
